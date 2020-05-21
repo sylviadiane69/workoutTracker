@@ -1,8 +1,8 @@
-const Workout = require("../models/workout.js")
+const db = require("../models")
 module.exports = (app) => {
-    //   Workout Routes   //
-    app.get("/api/workouts", (req, res) => {
-        Workout.find({}, (err, workout) => {
+
+    app.get("/api/workouts/", (req, res) => {
+        db.Workout.find({}, (err, workouts) => {
             if (err) {
                 console.log(err);
             } else {
@@ -10,9 +10,9 @@ module.exports = (app) => {
             }
         });
     });
-    //add excerise, set id, push to model, set true
+    //add exercise
     app.put("/api/workouts/:workout", ({ params, body }, res) => {
-        Workout.findOneAndUpdate({ _id: params.id },
+        db.Workout.findOneAndUpdate({ _id: params.id },
             { $push: { excercises: body } },
             { upsert: true, useFindandModify: false },
             updatedWorkout => {
@@ -20,13 +20,18 @@ module.exports = (app) => {
             })
     });
     //create new workout
-    app.post("/api/workouts", (req, res) => {
-        Workout.create({}).then(newWorkout => {
+    app.post("/api/workouts/", (req, res) => {
+        db.Workout.create({}).then(newWorkout => {
             res.json(newWorkout);
         });
     });
-}
+    app.put("/api/workouts/:id", ({ params, body }, res) => {
+    db.Workout.updateOne({ _id: params.id }, { $push: { exercises: body } }, { new: true, runValidators: true })
+        .then(doc => res.json(doc))
+        .catch(err => res.json(err));
+    });
 
+}
 
 
 
