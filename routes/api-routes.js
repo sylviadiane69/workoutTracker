@@ -1,6 +1,8 @@
+// workout database required for output
 const db = require("../models")
 module.exports = (app) => {
 
+    // loading data from workout database
     app.get("/api/workouts", (req, res) => {
         db.Workout.find({})
             .populate("exercises")
@@ -31,7 +33,7 @@ module.exports = (app) => {
                 res.status(400).json(err);
             });
     });
-
+    // updating fitness tracker
     app.put("/api/workouts/:id", ({ params, body }, res) => {
         db.Workout.updateOne({ _id: params.id },
             { $push: { exercises: body } },
