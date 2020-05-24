@@ -3,14 +3,14 @@ const db = require("../models")
 module.exports = (app) => {
 
     // loading data from workout database
-    app.get("/api/workouts", (req, res) => {
+    app.get("/api/workouts/range/", (req, res) => {
         db.Workout.find({})
             .populate("exercises")
             .then(dbWorkout => {
                 res.json(dbWorkout);
             })
             .catch(err => {
-                res.status(400).json(err);
+                res.json(err);
             });
     });
 
@@ -20,17 +20,17 @@ module.exports = (app) => {
                 res.json(dbWorkout);
             })
             .catch(err => {
-                res.status(400).json(err);
+                res.json(err);
             });
     });
 
-    app.post("/api/workouts/", ({ body }, res) => {
+    app.post("/api/workouts/range/", ({ body }, res) => {
         db.Workout.insertMany(body)
             .then(dbWorkout => {
                 res.json(dbWorkout);
             })
             .catch(err => {
-                res.status(400).json(err);
+                res.json(err);
             });
     });
     // updating fitness tracker
@@ -39,7 +39,7 @@ module.exports = (app) => {
             { $push: { exercises: body } },
             { new: true, runValidators: true })
             .then(dbWorkout => res.json(dbWorkout))
-            .catch(err => res.status(400).json(err));
+            .catch(err => res.json(err));
     });
 
 }
