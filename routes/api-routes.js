@@ -14,8 +14,9 @@ module.exports = (app) => {
             });
     });
 
-    app.post("/api/workouts/", ({ body }, res) => {
-        db.Workout.create({ day: Date.now() })
+    app.get("/api/workouts/", (req, res) => {
+        db.Workout.find({})
+            .sort({ date: -1 })
             .then(dbWorkout => {
                 res.json(dbWorkout);
             })
@@ -33,6 +34,7 @@ module.exports = (app) => {
                 res.json(err);
             });
     });
+
     // updating fitness tracker
     app.put("/api/workouts/:id", ({ params, body }, res) => {
         db.Workout.updateOne({ _id: params.id },
