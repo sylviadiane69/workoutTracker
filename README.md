@@ -12,3 +12,6 @@ Link to Heroku: https://desolate-chamber-14802.herokuapp.com/
 
 Link to GitHub: https://github.com/sylviadiane69/workoutTracker
 
+<img src="images/Terminal.png" width="400"> <img src="images/Wkout1.png" width="400">
+<img src="images/Wkout2.png" width="400"> <img src="images/Wkout3.png" width="400">
+
